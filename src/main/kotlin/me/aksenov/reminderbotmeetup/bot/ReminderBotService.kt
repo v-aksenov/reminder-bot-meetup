@@ -25,14 +25,40 @@ class ReminderBotService(
     override fun onUpdateReceived(update: Update?) {
         update?.message?.text?.let {
             val chatId = update.message.chat.id
-            val reminder = parseMessageToReminder(chatId, it)
-            reminderService.saveReminder(reminder)
-            sendMessage("Scheduled ${reminder.description}", chatId)
-            log.info("saved reminder $reminder")
+            if (it == "all") {
+                getAll(chatId)
+            } else if (update.message.isReply && it == "delete") {
+                deleteReminder(chatId, update.message.replyToMessage.text)
+            } else {
+                saveReminder(chatId, it)
+            }
         }
     }
 
+    private fun deleteReminder(chatId: Long, message: String) {
+        val reminder = parseMessageToReminder(chatId, message)
+        if (reminderService.deleteReminder(reminder)) {
+            sendMessage("Reminder deleted", chatId)
+        } else {
+            sendMessage("reminder not found", chatId)
+        }
+    }
+
+    private fun getAll(chatId: Long) {
+        val messageText = reminderService.getRemindersForChat(chatId)
+            .joinToString(prefix = "Your reminders\n", separator = "\n") { it.toString() }
+        sendMessage(messageText, chatId)
+    }
+
+    private fun saveReminder(chatId: Long, message: String) {
+        val reminder = parseMessageToReminder(chatId, message)
+        reminderService.saveReminder(reminder)
+        sendMessage("Scheduled ${reminder.description}", chatId)
+        log.info("saved reminder $reminder")
+    }
+
     fun sendMessage(message: String, chatId: Long) {
+        log.info("sent message [$message] to user $chatId")
         execute(SendMessage(chatId.toString(), message))
     }
 

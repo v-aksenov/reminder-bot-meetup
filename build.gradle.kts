@@ -36,6 +36,7 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "17"
     }
+    targetCompatibility = "11"
 }
 
 tasks.withType<Test> {

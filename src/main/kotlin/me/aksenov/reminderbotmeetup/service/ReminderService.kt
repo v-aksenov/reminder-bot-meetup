@@ -2,6 +2,7 @@ package me.aksenov.reminderbotmeetup.service
 
 import me.aksenov.reminderbotmeetup.model.Reminder
 import me.aksenov.reminderbotmeetup.storage.ReminderRepository
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -24,4 +25,31 @@ class ReminderService(
                 .plus(minutes, ChronoUnit.MINUTES)
                 .plus(hours, ChronoUnit.HOURS)
         }
+
+    fun getRemindersForChat(chatId: Long): List<Reminder> = reminderRepository.findByChatIdAndProcessedFalse(chatId)
+
+    fun deleteReminder(id: ObjectId): Boolean {
+        return if (reminderRepository.findById(id) == null) {
+            false
+        } else {
+            reminderRepository.deleteById(id)
+            true
+        }
+    }
+
+    fun deleteReminder(reminder: Reminder): Boolean {
+        val reminder = reminderRepository
+            .findFirstByChatIdAndDescriptionAndMinutesAndHours(
+                reminder.chatId,
+                reminder.description,
+                reminder.minutes,
+                reminder.hours
+            )
+        if (reminder == null) {
+            return false
+        } else {
+            reminderRepository.deleteById(reminder.id)
+            return true
+        }
+    }
 }

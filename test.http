@@ -1,0 +1,19 @@
+GET http://localhost:8080/reminder?chatId=125523316
+Content-Type: application/json
+
+###
+
+POST http://localhost:8080/reminder
+Content-Type: application/json
+
+{
+  "chatId": 125523316,
+  "description": "text from http",
+  "minutes": 13,
+  "hours": 13
+}
+
+###
+
+DELETE http://localhost:8080/reminder?id=637e5d3a3e46c874e460b791
+###

@@ -25,4 +25,9 @@ data class Reminder(
     val minutes: Long,
     @Field
     val hours: Long
-)
+) {
+
+    override fun toString(): String {
+        return description
+    }
+}
