@@ -36,11 +36,15 @@ class ReminderBotService(
     }
 
     private fun deleteReminder(chatId: Long, message: String) {
-        val reminder = parseMessageToReminder(chatId, message)
-        if (reminderService.deleteReminder(reminder)) {
+        try {
+            parseMessageToReminder(chatId, message).run {
+                reminderService.deleteReminder(chatId, description, minutes, hours)
+            }
             sendMessage("Reminder deleted", chatId)
-        } else {
+        } catch (e: IllegalStateException) {
             sendMessage("reminder not found", chatId)
+        } catch (e: NumberFormatException) {
+            sendMessage("cannot parse reminder from message", chatId)
         }
     }
 
@@ -51,10 +55,15 @@ class ReminderBotService(
     }
 
     private fun saveReminder(chatId: Long, message: String) {
-        val reminder = parseMessageToReminder(chatId, message)
-        reminderService.saveReminder(reminder)
-        sendMessage("Scheduled ${reminder.description}", chatId)
-        log.info("saved reminder $reminder")
+        try {
+            val reminder = parseMessageToReminder(chatId, message)
+            reminderService.saveReminder(reminder)
+            sendMessage("Scheduled ${reminder.description}", chatId)
+            log.info("saved reminder $reminder")
+        } catch (e: NumberFormatException) {
+            sendMessage("cannot parse reminder from message", chatId)
+        }
+
     }
 
     fun sendMessage(message: String, chatId: Long) {
