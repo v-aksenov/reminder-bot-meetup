@@ -1,19 +1,19 @@
 package me.aksenov.reminderbotmeetup.utils
 
-import me.aksenov.reminderbotmeetup.model.Reminder
+import me.aksenov.reminderbotmeetup.model.CreateReminderRequest
 
 // 1h иди погулять -> hours = 1, description = иди погулять
 
-//Wh test
+// Wh test
 
-fun parseMessageToReminder(chatId: Long, message: String): Reminder {
+fun parseMessageToReminder(chatId: Long, message: String): CreateReminderRequest {
     val minutes = message.getAmount(minuteRegex)
     val hours = message.getAmount(hourRegex)
     val description = message
         .replace(minuteRegex, "")
         .replace(hourRegex, "")
         .trim()
-    return Reminder(
+    return CreateReminderRequest(
         minutes = minutes,
         hours = hours,
         chatId = chatId,

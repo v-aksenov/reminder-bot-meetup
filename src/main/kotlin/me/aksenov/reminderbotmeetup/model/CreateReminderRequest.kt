@@ -1,5 +1,7 @@
 package me.aksenov.reminderbotmeetup.model
 
+import java.time.Instant
+
 data class CreateReminderRequest(
     val chatId: Long,
     val description: String,
@@ -7,10 +9,13 @@ data class CreateReminderRequest(
     val hours: Long = 0
 ) {
 
-    fun toReminder(): Reminder = Reminder(
+    fun toReminderDocument(
+        timeToReminder: Instant
+    ): Reminder = Reminder(
         chatId = chatId,
         description = description,
         minutes = minutes,
-        hours = hours
+        hours = hours,
+        timeToReminder = timeToReminder
     )
 }

@@ -1,5 +1,16 @@
 version: "3.7"
 services:
+  bot:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo_db
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_USERNAME: ${BOT_USERNAME}
+
   mongo_db:
     image: "mongo:6.0.2-focal"
     restart: always

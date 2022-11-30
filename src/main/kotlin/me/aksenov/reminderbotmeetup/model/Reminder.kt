@@ -16,7 +16,7 @@ data class Reminder(
     @Field
     var processed: Boolean = false,
     @Field
-    var timeToReminder: Instant? = null,
+    val timeToReminder: Instant,
     @Field
     val chatId: Long,
     @Field
@@ -30,4 +30,14 @@ data class Reminder(
     override fun toString(): String {
         return description
     }
+
+    fun toResponse() = ReminderResponse(
+        id = id,
+        processed = processed,
+        timeToReminder = timeToReminder,
+        chatId = chatId,
+        description = description,
+        minutes = minutes,
+        hours = hours
+    )
 }
