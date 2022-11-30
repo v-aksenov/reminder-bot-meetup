@@ -11,7 +11,7 @@ import java.time.Instant
 class ReminderScheduler(
     private val repository: ReminderRepository,
     private val botService: ReminderBotService
-): Logger {
+) : Logger {
 
     @Scheduled(cron = "0 * * * * *")
     fun checkReminders() {

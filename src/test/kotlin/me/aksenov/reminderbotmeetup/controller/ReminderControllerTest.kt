@@ -23,14 +23,13 @@ import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class ReminderControllerTest(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
     private val reminderRepository: ReminderRepository
-): StringSpec() {
+) : StringSpec() {
 
     @MockkBean(relaxed = true)
     private lateinit var reminderBotService: ReminderBotService

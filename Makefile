@@ -13,3 +13,6 @@ run: build
 
 test: clean
 	./gradlew test
+
+format:
+	./gradlew ktlintFormat

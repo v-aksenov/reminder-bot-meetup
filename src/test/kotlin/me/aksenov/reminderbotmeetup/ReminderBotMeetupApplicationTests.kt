@@ -9,5 +9,4 @@ class ReminderBotMeetupApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

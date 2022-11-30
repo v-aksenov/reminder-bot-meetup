@@ -63,7 +63,6 @@ class ReminderBotService(
         } catch (e: NumberFormatException) {
             sendMessage("cannot parse reminder from message", chatId)
         }
-
     }
 
     fun sendMessage(message: String, chatId: Long) {

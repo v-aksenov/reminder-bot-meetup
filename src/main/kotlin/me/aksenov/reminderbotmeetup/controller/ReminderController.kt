@@ -1,7 +1,6 @@
 package me.aksenov.reminderbotmeetup.controller
 
 import me.aksenov.reminderbotmeetup.model.CreateReminderRequest
-import me.aksenov.reminderbotmeetup.model.Reminder
 import me.aksenov.reminderbotmeetup.model.ReminderResponse
 import me.aksenov.reminderbotmeetup.service.ReminderService
 import org.bson.types.ObjectId
@@ -37,5 +36,4 @@ class ReminderController(private val reminderService: ReminderService) {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun handleException() {
     }
-
 }

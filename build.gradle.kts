@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "me.aksenov"
@@ -38,6 +39,8 @@ tasks.withType<KotlinCompile> {
     }
     targetCompatibility = "11"
 }
+
+apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
 tasks.withType<Test> {
     useJUnitPlatform()
